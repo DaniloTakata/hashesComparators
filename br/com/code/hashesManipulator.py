@@ -1,12 +1,15 @@
 import os
 import hashlib
 
-common_path = "C:\\Users\\danil\\OneDrive\\Área de Trabalho\\testeHash"
+# common_path = "C:\\Users\\danil\\OneDrive\\Área de Trabalho\\testeHash"
+
+common_path = os.getcwd() + "\\filesManipulated"
 words_file = []
 hashes_file = []
 founds = {}
 
 
+# Função responsável por acessar o caminho onde está o código e encontrar os arquivos worlists e de hashes
 def findFiles(file_path):
     for foundFile in os.listdir(common_path):
         if 'words' in foundFile:
@@ -15,16 +18,19 @@ def findFiles(file_path):
             hashes_file.append(foundFile)
 
 
+# Função que recebe uma palavra e gera seu hash em md5
 def createHash(word):
     return hashlib.md5(word.encode()).hexdigest()
 
 
+# Função que compara uma palavra específica e uma hash específica
 def compareDatas(wordc, hashc):
     if wordc == hashc:
         return True
     return False
 
 
+# Função que percorre todos os arquivos encontrados e compara as palavras
 def verifyDatas(words, hashes):
     for wordFile in words:
         word_file_path = common_path + "\\" + wordFile
@@ -48,6 +54,7 @@ def verifyDatas(words, hashes):
                                 continue
 
 
+# Cria um novo arquivo as palavras e suas respectivas hashes encontradas no processo, no formato palavra: hash
 def createNewFile(dicts):
     newFileName = common_path + "\\hashesFounds.txt"
     with open(newFileName, 'w') as newFile:
